@@ -21,18 +21,15 @@ puts "\nUn nouveau joueur entre dans l'arène || #{player.name} || sera t'il le 
 
 # Initialisation des bots
 
-bots = []
-
-bot1 = Player.new("Josiane")
-bot2 = Player.new("José")
-
+bots = ["Josiane", "José"]
 enemies = bots.map { |name| Player.new(name) }
 
-puts "\nLes bots #{bot1.name} et #{bot2.name} entrent dans l'arène"
+bot_list = enemies.map(&:name).join(", ")
+puts "\nLes bots #{bot_list} entrent dans l'arène"
 
 # Combat
 
-while player.life_points > 0 && (bot1.life_points > 0 || bot2.life_points > 0)
+while player.life_points > 0 && enemies.any? { |bot| bot.life_points > 0 }
 
     player.show_state
 
@@ -40,12 +37,11 @@ while player.life_points > 0 && (bot1.life_points > 0 || bot2.life_points > 0)
     puts "a - chercher une meilleure arme"
     puts "s - chercher à se soigner"
     puts "\nAttaquer un joueur en vue :"
-    print "0 - "
-    bot1.show_state
-    print "1 - "
-    bot2.show_state
-    puts "\nQuitter en écrivant 'leave'"
-    print "\n> "
+    enemies.each_with_index do |enemy, index|
+        print "#{index} - "
+        enemy.show_state
+    end
+    print "> "
 
     action = gets.chomp
 
@@ -53,10 +49,8 @@ while player.life_points > 0 && (bot1.life_points > 0 || bot2.life_points > 0)
         player.search_weapon
     elsif action == "s"
         player.search_health_pack
-    elsif action == "0"
-        player.attacks(bot1)
-    elsif action == "1"
-        player.attacks(bot2)
+    elsif action.to_i.between?(0, enemies.length - 1)
+        player.attacks(enemies[action.to_i])
     elsif action == "leave"
         puts "\nTu quittes le combat."
         break
