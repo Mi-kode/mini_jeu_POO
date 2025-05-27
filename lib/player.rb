@@ -10,7 +10,7 @@ class Player
     end
 
     def show_state
-        puts "#{name} a #{life_points} points de vie"
+        puts "#{name} a #{life_points} points de vie    |"
     end
 
     def gets_damage(attack_amount)

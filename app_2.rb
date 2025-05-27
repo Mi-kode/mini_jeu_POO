@@ -33,30 +33,34 @@ while player.life_points > 0 && enemies.any? { |bot| bot.life_points > 0 }
 
     player.show_state
 
-    puts "\nQuelle action veux-tu effectuer ?"
-    puts "a - chercher une meilleure arme"
-    puts "s - chercher à se soigner"
-    puts "\nAttaquer un joueur en vue :"
+    print "\n-------------------------------------"
+    puts "\n| Quelle action veux-tu effectuer ? |"
+    puts "| a - chercher une meilleure arme   |"
+    puts "| s - chercher à se soigner         |"
+    puts "\n| Attaquer un joueur en vue :       |"
     enemies.each_with_index do |enemy, index|
-        print "#{index} - "
+        print "| #{index} - "
         enemy.show_state
     end
+    print "\n| Quitter en écrivant 'leave'       |"
+    puts "\n-------------------------------------"
     print "> "
 
     action = gets.chomp
 
-    if action == "a"
+    if action == "leave"
+        puts "\nTu quittes le combat."
+        break
+    elsif action == "a"
         player.search_weapon
     elsif action == "s"
         player.search_health_pack
     elsif action.to_i.between?(0, enemies.length - 1)
         player.attacks(enemies[action.to_i])
-    elsif action == "leave"
-        puts "\nTu quittes le combat."
-        break
     else
         puts "Commande inconnue, réessaie."
     end
+
 
 
     puts "\nLes bots t'attaquent !"
