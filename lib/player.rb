@@ -103,6 +103,3 @@ class HumanPlayer < Player
     end
 
 end
-
-binding.pry
-puts "end of file"

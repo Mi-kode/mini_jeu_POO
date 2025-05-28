@@ -1,8 +1,11 @@
 class Game
 
-    attr_accessor :human_player, :enemies
+    attr_accessor :human_player, :enemies, :players_left, :ennemies_in_sight
 
     def initialize(name)
+        enemies_in_sight = []
+        players_left = 10
+
         @human_player = HumanPlayer.new(name)
 
         bots = ["Octane", "Wraith", "Gibraltar", "Horizon"]
@@ -75,6 +78,10 @@ class Game
         else
             puts "\nLoser ! Tu as perdu !"
         end
+    end
+
+    def new_players_in_sight
+
     end
 
 end
